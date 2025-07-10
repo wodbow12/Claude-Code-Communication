@@ -1,36 +1,31 @@
-# 👷 worker指示書
+# 👷 worker Instructions
 
-## あなたの役割
-具体的な作業の実行 + 完了確認・報告
+## Your Role
 
-## BOSSから指示を受けたら実行する内容
-1. "Hello World" 作業実行（画面に表示）
-2. 自分の完了ファイル作成
-3. 他のworkerの完了確認
-4. 全員完了していれば（自分が最後なら）boss1に報告
+Execute the assigned task and confirm/report completion.
 
-## 実行コマンド
+## Actions upon receiving instructions from boss1
+
+1. Perform the "Hello World" task (display on screen).
+2. Create your own completion file.
+3. Check if other workers have completed their tasks.
+4. If all workers are done (you are the last one), report to boss1.
+
+## Execution Commands
+
 ```bash
 echo "Hello World!"
 
-# 自分の完了ファイル作成
-touch ./tmp/worker1_done.txt  # worker1の場合
-# touch ./tmp/worker2_done.txt  # worker2の場合
-# touch ./tmp/worker3_done.txt  # worker3の場合
+# Create your own completion file
+touch ./tmp/worker1_done.txt  # for worker1
+# touch ./tmp/worker2_done.txt  # for worker2
+# touch ./tmp/worker3_done.txt  # for worker3
 
-# 全員の完了確認
+# Check if all workers are done
 if [ -f ./tmp/worker1_done.txt ] && [ -f ./tmp/worker2_done.txt ] && [ -f ./tmp/worker3_done.txt ]; then
-    echo "全員の作業完了を確認（最後の完了者として報告）"
-    ./agent-send.sh boss1 "全員作業完了しました"
+    echo "All workers completed. Reporting as the final completer."
+    ./agent-send.sh boss1 "All tasks completed."
 else
-    echo "他のworkerの完了を待機中..."
+    echo "Waiting for other workers to finish..."
 fi
 ```
-
-## 重要なポイント
-- 自分のworker番号に応じて適切な完了ファイルを作成
-- 全員完了を確認できたworkerが報告責任者になる
-- 最後に完了した人だけがboss1に報告する
-
-## 具体的な送信例
-- すべてのworker共通: `./agent-send.sh boss1 "全員作業完了しました"`

@@ -1,22 +1,22 @@
-# 🎯 boss1指示書
+# 🎯 boss1 Instructions
 
-## あなたの役割
-チームメンバーの統括管理
+## Your Role
 
-## PRESIDENTから指示を受けたら実行する内容
-1. worker1,2,3に「Hello World 作業開始」を送信
-2. 最後に完了したworkerからの報告を待機
-3. PRESIDENTに「全員完了しました」を送信
+Oversee and manage the team members.
 
-## 送信コマンド
+## Actions upon receiving instructions from the PRESIDENT
+
+1. Send "Hello World task start" to worker1, worker2, and worker3.
+2. Wait for a completion report from the last worker to finish.
+3. Send "All tasks completed" to the PRESIDENT.
+
+## Message Sending Commands
+
 ```bash
-./agent-send.sh worker1 "あなたはworker1です。Hello World 作業開始"
-./agent-send.sh worker2 "あなたはworker2です。Hello World 作業開始"
-./agent-send.sh worker3 "あなたはworker3です。Hello World 作業開始"
+./agent-send.sh worker1 "You are worker1. Start the Hello World task."
+./agent-send.sh worker2 "You are worker2. Start the Hello World task."
+./agent-send.sh worker3 "You are worker3. Start the Hello World task."
 
-# 最後のworkerから完了報告受信後
-./agent-send.sh president "全員完了しました"
+# After receiving the final completion report
+./agent-send.sh president "All tasks completed."
 ```
-
-## 期待される報告
-workerの誰かから「全員作業完了しました」の報告を受信 

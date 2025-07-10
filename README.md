@@ -6,9 +6,9 @@ Welcome to the **Claude-Code-Communication** repository! This project showcases 
 
 Experience a hierarchical command system with the following structure:
 
-- **PRESIDENT**: The project manager
-- **BOSS**: The team leader
-- **WORKERS**: Execution team members
+-   **PRESIDENT**: The project manager
+-   **BOSS**: The team leader
+-   **WORKERS**: Execution team members
 
 ### 👥 Agent Structure
 
@@ -16,7 +16,7 @@ Experience a hierarchical command system with the following structure:
 📊 PRESIDENT Session (1 Pane)
 └── PRESIDENT: Project Manager
 
-📊 Multiagent Session (4 Panes)  
+📊 Multiagent Session (4 Panes)
 ├── boss1: Team Leader
 ├── worker1: Execution Agent A
 ├── worker2: Execution Agent B
@@ -65,7 +65,7 @@ tmux attach-session -t president
 First, authenticate in the PRESIDENT session:
 
 ```bash
-tmux send-keys -t president 'claude' C-m
+tmux send-keys -t president 'claude --dangerously-skip-permissions' C-m
 ```
 
 Follow the prompts to grant permission.
@@ -75,7 +75,7 @@ Follow the prompts to grant permission.
 Once authentication is complete, start all agents in the multiagent session:
 
 ```bash
-for i in {0..3}; do tmux send-keys -t multiagent:0.$i 'claude' C-m; done
+for i in {0..3}; do tmux send-keys -t multiagent:0.$i 'claude --dangerously-skip-permissions' C-m; done
 ```
 
 ### 4. Run the Demo
@@ -94,9 +94,9 @@ For additional features and updates, visit the [Releases section](https://github
 
 ## 🌟 Features
 
-- **Hierarchical Command Structure**: Experience how commands flow from the PRESIDENT to the WORKERS.
-- **Real-time Communication**: Witness how agents interact in real-time.
-- **Easy Setup**: Simple scripts to set up the tmux environment quickly.
+-   **Hierarchical Command Structure**: Experience how commands flow from the PRESIDENT to the WORKERS.
+-   **Real-time Communication**: Witness how agents interact in real-time.
+-   **Easy Setup**: Simple scripts to set up the tmux environment quickly.
 
 ## 📊 Usage Scenarios
 
@@ -114,8 +114,8 @@ Utilize this setup for research projects where multiple agents need to work on d
 
 ## 🛠️ Requirements
 
-- **Tmux**: Ensure you have tmux installed on your system.
-- **Bash**: The setup script is written in Bash, so a compatible shell is necessary.
+-   **Tmux**: Ensure you have tmux installed on your system.
+-   **Bash**: The setup script is written in Bash, so a compatible shell is necessary.
 
 ## 🔧 Troubleshooting
 
@@ -127,14 +127,14 @@ If you encounter issues during setup or execution, consider the following steps:
 
 ## 📚 Additional Resources
 
-- [Tmux Documentation](https://man7.org/linux/man-pages/man1/tmux.1.html): Official documentation for tmux.
-- [Bash Scripting Guide](https://www.gnu.org/software/bash/manual/bash.html): Learn more about Bash scripting.
+-   [Tmux Documentation](https://man7.org/linux/man-pages/man1/tmux.1.html): Official documentation for tmux.
+-   [Bash Scripting Guide](https://www.gnu.org/software/bash/manual/bash.html): Learn more about Bash scripting.
 
 ## 📈 Future Improvements
 
-- **Enhanced User Interface**: Develop a more user-friendly interface for managing sessions.
-- **Additional Agent Types**: Introduce more agent types to expand the system's capabilities.
-- **Integration with Other Tools**: Explore integration with project management tools for better functionality.
+-   **Enhanced User Interface**: Develop a more user-friendly interface for managing sessions.
+-   **Additional Agent Types**: Introduce more agent types to expand the system's capabilities.
+-   **Integration with Other Tools**: Explore integration with project management tools for better functionality.
 
 ## 📧 Contact
 
