@@ -83,7 +83,7 @@ for i in {0..3}; do tmux send-keys -t multiagent:0.$i 'claude --dangerously-skip
 You can directly input commands in the PRESIDENT session:
 
 ```
-あなたはpre
+You are the president. Please follow the instructions.
 ```
 
 This command will allow you to interact with the system and see how the agents communicate.
